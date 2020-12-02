@@ -14,7 +14,7 @@ module.exports = {
   printWidth: 100,
   tabWidth: 2,
   useTabs: false,
-  semi: true,
+  semi: false,
   vueIndentScriptAndStyle: true,
   singleQuote: true,
   quoteProps: 'as-needed',
@@ -27,7 +27,7 @@ module.exports = {
   requirePragma: false,
   proseWrap: 'never',
   htmlWhitespaceSensitivity: 'strict',
-  endOfLine: 'lf',
+  endOfLine: 'auto',
   rangeStart: 0,
   overrides: [
     {
