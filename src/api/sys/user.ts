@@ -5,8 +5,8 @@ enum Api {
   Logout = '/vue-element-admin/user/logout',
   UserInfo = '/vue-element-admin/user/info',
 }
-export function login(data: LoginParams): LoginResponseModel {
-  return request({
+export function login(data: LoginParams) {
+  return request<LoginResponseModel>({
     url: Api.Login,
     method: 'post',
     data,

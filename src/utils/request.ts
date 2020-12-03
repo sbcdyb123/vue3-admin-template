@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
+import { BaseResponseModel } from '@/api/model/baseModel'
 // create an axios instance
 const service: AxiosInstance = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -41,5 +42,16 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-export default service
+const request = <T = any>(config: AxiosRequestConfig): Promise<T> => {
+  return new Promise((resolve, reject) => {
+    service
+      .request<any, AxiosResponse<BaseResponseModel>>(config)
+      .then((res: AxiosResponse<BaseResponseModel>) => {
+        resolve((res as unknown) as Promise<T>)
+      })
+      .catch((error: AxiosError) => {
+        reject(error)
+      })
+  })
+}
+export default request
