@@ -6,8 +6,18 @@
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\vue.config.js
  */
+const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 const StyleLintPlugin = require("stylelint-webpack-plugin");
 module.exports = {
+  devServer: {
+    port: port,
+    open: false,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    before: require('./mock/mock-server.js')
+  },
   configureWebpack: {
     plugins: [
       new StyleLintPlugin({

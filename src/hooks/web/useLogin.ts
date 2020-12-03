@@ -8,14 +8,17 @@
  */
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { login } from '@/api/sys/user'
+import { LoginParams } from '@/api/sys/model/userModel'
 export function useLogin() {
   const router = useRouter()
-  const formInline = reactive({
-    username: '',
-    password: '',
+  const formInline = reactive<LoginParams>({
+    username: 'admin',
+    password: '123456',
   })
-  function handleSubmit(e: unknown) {
+  async function handleSubmit(e: unknown) {
     console.log(formInline, e, router)
+    await login(formInline)
     router.push({
       name: 'dashboard',
     })
