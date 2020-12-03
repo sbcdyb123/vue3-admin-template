@@ -1,38 +1,26 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-02 11:13:39
- * @LastEditTime: 2020-12-03 08:45:12
+ * @LastEditTime: 2020-12-03 15:23:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\App.vue
 -->
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <!-- <Layout> -->
+  <router-view></router-view>
+  <!-- </Layout> -->
 </template>
 
-<style lang="less">
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-    text-align: center;
-  }
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  // import Layout from '@/components/Layout/index.vue'
+  export default defineComponent({
+    name: 'app',
+    components: {
+      // Layout,
+    },
+  })
+</script>
 
-  #nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
-    }
-  }
-</style>
+<style scoped lang="less"></style>

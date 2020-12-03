@@ -32,7 +32,9 @@ vscode setting.json
 
 ```json
 {
-  "workbench.colorTheme": "Dracula",
+  {
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Dracula Soft",
   "typescript.tsdk": "./node_modules/typescript/lib",
   //===========================================
   //============= Editor ======================
@@ -47,7 +49,7 @@ vscode setting.json
   "editor.detectIndentation": false, // vscode默认启用了根据文件类型自动设置tabsize的选项
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.formatOnPaste": true, //自动格式化粘贴的内容
-  "editor.formatOnSave": true, //保存自动格式化
+  // "editor.formatOnSave": true, //保存自动格式化
   "editor.suggestSelection": "first",
   "editor.trimAutoWhitespace": true,
   "editor.quickSuggestions": {
@@ -149,35 +151,29 @@ vscode setting.json
   // ===========================================
   // ================ Eslint ===================
   // ===========================================
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue-html",
+    "typescript"
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
+  // "eslint.run": "onSave",
+  // "eslint.autoFixOnSave": true,
   // ===========================================
   // ================ Vetur ====================
   // ===========================================
-  "vetur.experimental.templateInterpolationService": true,
-  "vetur.format.options.tabSize": 2,
-  "vetur.format.defaultFormatter.html": "js-beautify-html", // 使用js-beautify-html格式化
-  "vetur.format.defaultFormatter.scss": "prettier", // 使用js-beautify-html格式化
-  "vetur.format.defaultFormatter.css": "prettier", // 使用js-beautify-html格式化
-  //   "vetur.format.defaultFormatter.html": "prettyhtml",
-  "vetur.format.defaultFormatter.ts": "prettier-tslint",
-  "vetur.format.defaultFormatter.js": "prettier",
-  "vetur.languageFeatures.codeActions": false,
+  // "vetur.experimental.templateInterpolationService": true,
+  // "vetur.format.options.tabSize": 2,
+  // "vetur.languageFeatures.codeActions": false,
   // "vetur.useWorkspaceDependencies": true,
-  "vetur.format.defaultFormatterOptions": {
-    "js-beautify-html": {
-      //   "wrap_attributes": "force-aligned", // 单行
-      "wrap_attributes": "force-expand-multiline" // 属性强制折行对齐 多行
-    },
-    "prettier": {
-      "eslintIntegration": true, // 让perttier使用eslint的格式进行检查
-      "arrowParens": "always", // 箭头函数参数括号 默认avoid 可选 avoid | always
-      "semi": false, // 使用分号, 默认true
-      "singleQuote": true // 使用单引号, 默认false(在jsx中配置无效, 默认都是双引号)
-    }
-  },
   // 函数注释
   //===========================================
   //============= Code Runner =================
@@ -192,42 +188,20 @@ vscode setting.json
   "telemetry.enableTelemetry": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
   // 引用路径设置
-  // "path-intellisense.mappings": {
-  //     "/@/": "${workspaceRoot}/src"
-  // },
+  "path-intellisense.mappings": {
+    "@/": "${workspaceRoot}/src"
+  },
   "prettier.requireConfig": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.sideBar.location": "left",
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "explorer.confirmDelete": false,
+  "editor.tabSize": 2,
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[less]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "explorer.confirmDelete": false
+  }
+}
 }
 ```
