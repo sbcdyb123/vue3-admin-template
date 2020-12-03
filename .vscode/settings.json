@@ -138,7 +138,7 @@
   //   "vetur.format.defaultFormatter.html": "prettyhtml",
   "vetur.format.defaultFormatter.ts": "prettier-tslint",
   "vetur.format.defaultFormatter.js": "prettier",
-    "vetur.languageFeatures.codeActions": false,
+  "vetur.languageFeatures.codeActions": false,
   // "vetur.useWorkspaceDependencies": true,
   "vetur.format.defaultFormatterOptions": {
     "js-beautify-html": {
@@ -172,7 +172,6 @@
   "prettier.requireConfig": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.sideBar.location": "left",
-
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -203,7 +202,6 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }
