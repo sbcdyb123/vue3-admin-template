@@ -10,6 +10,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
 
+import '@/style/index.less'
+
 import { setAntd } from '@/setup/ant-design-vue'
 import { setRouter } from './router'
 

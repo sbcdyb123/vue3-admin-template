@@ -8,9 +8,7 @@
  */
 // eslint-disable-next-line prettier/prettier
 import type {App} from 'vue'
-import antv from 'ant-design-vue'
-
-import 'ant-design-vue/dist/antd.css'
+import {Button,Menu,Layout, Col, Row, Input, Form} from 'ant-design-vue'
 export function setAntd(app:App<Element>){
-  app.use(antv)
+  app.use(Button).use(Menu).use(Layout).use(Col).use(Row).use(Input).use(Form)
 }
