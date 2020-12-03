@@ -18,7 +18,8 @@ export function useLogin() {
   })
   async function handleSubmit(e: unknown) {
     console.log(formInline, e, router)
-    await login(formInline)
+    const { code, data, message } = await login(formInline)
+    console.log(code, data, message)
     router.push({
       name: 'dashboard',
     })
