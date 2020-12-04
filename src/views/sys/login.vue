@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 09:59:37
- * @LastEditTime: 2020-12-03 13:55:48
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-04 23:01:06
+ * @LastEditors: fangLong
  * @Description: In User Settings Edit
- * @FilePath: \unit-admin-compound\src\views\sys\login.vue
+ * @FilePath: \vue3-admin-template\src\views\sys\login.vue
 -->
 <template>
   <a-row type="flex" justify="center" class="login_form">
