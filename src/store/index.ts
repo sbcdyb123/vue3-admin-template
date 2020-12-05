@@ -1,16 +1,28 @@
 /*
- * @Author: your name
- * @Date: 2020-12-02 11:13:39
- * @LastEditTime: 2020-12-03 09:50:19
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \unit-admin-compound\src\store\index.ts
+ * @Author: fangLong
+ * @Date: 2020-12-03 18:37:34
+ * @LastEditors: fangLong
+ * @LastEditTime: 2020-12-06 04:32:56
+ * @FilePath: \vue3-admin-template\src\store\index.ts
  */
-import { createStore } from 'vuex'
-console.log(123)
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+import { App } from 'vue'
+import {
+  createStore,
+  // createLogger, Plugin
+} from 'vuex'
+import { config } from 'vuex-module-decorators'
+
+config.rawError = true
+const isDev = true
+// const plugins: Plugin<any>[] = isDev ? [createLogger()] : [];
+
+const store = createStore({
+  strict: isDev,
+  // plugins,
 })
+
+export function setStore(app: App<Element>) {
+  app.use(store)
+}
+
+export default store

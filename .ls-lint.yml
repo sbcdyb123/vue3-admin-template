@@ -2,7 +2,7 @@ ls:
   src/*:
     .js: kebab-case | PascalCase
     .vue: PascalCase | kebab-case | regex:^index
-    .ts: camelCase | PascalCase
+    .ts: camelCase | PascalCase | kebab-case
     .d.ts: kebab-case
     .mock.ts: kebab-case
     .data.ts: camelCase | kebab-case

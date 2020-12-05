@@ -8,11 +8,12 @@
 
 import { Router } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
+import { getToken4Cookies } from '@/utils/auth'
 const whitePageList: PageEnum[] = [PageEnum.BASE_LOGIN]
 export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to) => {
-    const token = ''
-    if (token) {
+    const token = getToken4Cookies()
+    if (token as string) {
       if (to.path === PageEnum.BASE_LOGIN) {
         router.push({ path: '/' })
         return true

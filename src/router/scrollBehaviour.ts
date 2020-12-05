@@ -1,7 +1,14 @@
+/*
+ * @Author: fangLong
+ * @Date: 2020-12-04 22:03:24
+ * @LastEditors: fangLong
+ * @LastEditTime: 2020-12-06 04:32:27
+ * @FilePath: \vue3-admin-template\src\router\scrollBehaviour.ts
+ */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 // see https://github.com/vuejs/vue-router-next/blob/master/playground/scrollWaiter.ts
 class ScrollQueue {
-  private resolve: (() => void) | null = null
+  private resolve: ((value: any) => void) | null = null
   private promise: Promise<any> | null = null
 
   add() {
@@ -11,7 +18,7 @@ class ScrollQueue {
   }
 
   flush() {
-    this.resolve && this.resolve()
+    this.resolve && this.resolve('')
     this.resolve = null
     this.promise = null
   }
