@@ -1,15 +1,18 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-02 11:13:39
- * @LastEditTime: 2020-12-03 15:23:04
+ * @LastEditTime: 2020-12-07 06:30:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\App.vue
 -->
 <template>
   <!-- <Layout> -->
-  <router-view></router-view>
+  <!-- <router-view></router-view> -->
   <!-- </Layout> -->
+  <router-view v-slot="{ Component }">
+    <component :is="Component" />
+  </router-view>
 </template>
 
 <script lang="ts">

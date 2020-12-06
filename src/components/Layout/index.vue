@@ -1,30 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-03 16:20:48
+ * @LastEditTime: 2020-12-07 06:44:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
 -->
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo" />
-      <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
-        <a-menu-item key="1">
-          <user-outlined />
-          <span>nav 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <video-camera-outlined />
-          <span>nav 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <upload-outlined />
-          <span>nav 3</span>
-        </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
+    <SiderBar />
     <a-layout>
       <a-layout-header style=" padding: 0;background: #fff;">
         <menu-unfold-outlined
@@ -37,27 +21,22 @@
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
-        <router-view></router-view>
+        <router-view v-slot="{ Component, route }">
+          <component :is="Component" :key="route.fullPath" />
+        </router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
-  import {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-  } from '@ant-design/icons-vue'
-
+  import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+  import SiderBar from './components/SiderBar/index'
   export default {
+    name: 'DefaultLayout',
     components: {
-      UserOutlined,
-      VideoCameraOutlined,
-      UploadOutlined,
       MenuUnfoldOutlined,
       MenuFoldOutlined,
+      SiderBar,
     },
     data() {
       return {
