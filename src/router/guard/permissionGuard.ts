@@ -2,7 +2,7 @@
  * @Author: fangLong
  * @Date: 2020-12-04 22:29:33
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 07:00:13
+ * @LastEditTime: 2020-12-07 10:26:35
  * @FilePath: \vue3-admin-template\src\router\guard\permissionGuard.ts
  */
 
@@ -17,22 +17,23 @@ export function createPermissionGuard(router: Router) {
     const token = getToken4Cookies()
     if (token) {
       if (to.path === PageEnum.BASE_LOGIN) {
-        router.push({ path: '/' })
-        return true
+        return { path: '/' }
       } else {
         const hasRoutes = userPermission.getRoutesState && userPermission.getRoutesState.length
         if (hasRoutes) {
           return true
         } else {
           // console.log('null routes', hasRoutes)
-
-          const routes = await userPermission.generateRoutesAction()
-            // console.log(routes)
-          ;(routes as any[]).forEach(async (route: RouteRecordRaw) => {
-            // console.log(route)
-            router.addRoute(route)
-          })
-          // console.log(router.getRoutes())
+          try {
+            const routes = await userPermission.generateRoutesAction()
+            ;(routes as any[]).forEach(async (route: RouteRecordRaw) => {
+              // console.log(route)
+              router.addRoute(route)
+            })
+            return { ...to, replace: true }
+          } catch (error) {
+            console.log(error)
+          }
         }
       }
     } else {

@@ -1,7 +1,7 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-07 01:37:53
- * @LastEditTime: 2020-12-07 02:17:58
+ * @LastEditTime: 2020-12-07 12:42:50
  */
 import store from '@/store/index'
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators'

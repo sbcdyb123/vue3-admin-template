@@ -1,8 +1,8 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-05 23:42:58
- * @LastEditors: fangLong
- * @LastEditTime: 2020-12-06 04:29:17
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-07 10:28:15
  * @FilePath: \vue3-admin-template\src\store\modules\user.ts
  */
 import store from '@/store/index'

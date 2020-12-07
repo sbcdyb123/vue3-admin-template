@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 11:20:28
- * @LastEditTime: 2020-12-07 07:03:26
+ * @LastEditTime: 2020-12-07 08:59:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-admin-template\src\hooks\web\useLogin.ts
@@ -22,10 +22,7 @@ export function useLogin() {
     console.log(formInline, e, router)
     const { response } = await login(formInline)
     userStore.commitTokenState(response.token)
-    await router.isReady()
-    setTimeout(() => {
-      router.push('/dashboard')
-    }, 3000)
+    router.push('/dashboard')
   }
   return {
     formInline,
