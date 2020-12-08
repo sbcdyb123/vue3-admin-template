@@ -2,7 +2,7 @@
 .local
 .output.js
 /node_modules/**
-
+shims-vue.d.ts
 **/*.svg
 **/*.sh
 
