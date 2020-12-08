@@ -1,7 +1,7 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-07 01:37:53
- * @LastEditTime: 2020-12-07 12:42:50
+ * @LastEditTime: 2020-12-08 23:35:56
  */
 import store from '@/store/index'
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators'
@@ -10,6 +10,7 @@ import projectSetting from '@/setting/projectSetting'
 import { permissionModeEnum } from '@/enums/appEnum'
 import { message } from 'ant-design-vue'
 import { asyncRoutes, baseRoutes } from '@/router/routes'
+import { filterRoutes } from '@/utils/helper/routes'
 const NAME = 'permission'
 hotModuleUnregisterModule(NAME)
 
@@ -34,7 +35,8 @@ class Permission extends VuexModule {
           resolve('后端加载路由')
         } else {
           routes = [...baseRoutes, ...asyncRoutes]
-          this.commitRoutesState(routes)
+          const finallyRoutes = filterRoutes(routes)
+          this.commitRoutesState(finallyRoutes)
           resolve(asyncRoutes)
         }
       } catch (error) {

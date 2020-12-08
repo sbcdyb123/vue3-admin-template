@@ -2,7 +2,7 @@
  * @Author: fangLong
  * @Date: 2020-12-04 21:35:57
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 08:56:58
+ * @LastEditTime: 2020-12-08 18:50:09
  * @FilePath: \vue3-admin-template\src\router\routes\index.ts
  */
 
@@ -26,6 +26,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
+    hidden: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

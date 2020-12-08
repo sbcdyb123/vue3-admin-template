@@ -1,14 +1,25 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-07 06:44:36
+ * @LastEditTime: 2020-12-08 23:41:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
 -->
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <SiderBar />
+    <a-layout-sider>
+      <a-menu
+        class="vab-menu"
+        theme="dark"
+        mode="inline"
+        v-model:selectedKeys="selectedKeys"
+        v-model:openKeys="openKeys"
+      >
+        <sider-bar-menu v-for="route in routes" :key="route.path" :item="route" />
+      </a-menu>
+    </a-layout-sider>
+
     <a-layout>
       <a-layout-header style=" padding: 0;background: #fff;">
         <menu-unfold-outlined
@@ -30,18 +41,37 @@
 </template>
 <script>
   import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
-  import SiderBar from './components/SiderBar/index'
+  import SiderBarMenu from './components/SiderBarMenu/index'
+  import { userPermission } from '@/store/modules/permission'
   export default {
     name: 'DefaultLayout',
     components: {
       MenuUnfoldOutlined,
       MenuFoldOutlined,
-      SiderBar,
+      SiderBarMenu,
     },
     data() {
       return {
-        selectedKeys: ['1'],
+        selectedKeys: [],
+        openKeys: [],
         collapsed: false,
+      }
+    },
+    watch: {
+      $route: {
+        handler({ path, matched }) {
+          matched[0].children.length > 1
+            ? (this.selectedKeys = [path])
+            : (this.selectedKeys = [matched[0].path])
+          this.openKeys = [matched[0].path]
+        },
+        immediate: true,
+      },
+    },
+    setup() {
+      const routes = userPermission.getRoutesState
+      return {
+        routes,
       }
     },
   }
