@@ -3,7 +3,7 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-07 01:54:16
- * @LastEditTime: 2020-12-08 21:29:43
+ * @LastEditTime: 2020-12-10 01:32:09
  */
 const sysRoutes = [
   {
@@ -14,11 +14,12 @@ const sysRoutes = [
     children: [
       {
         path: 'dashboard',
-        name: 'dashboard-index',
+        name: 'dashboard',
         component: () => import('@/views/dashboard/index.vue'),
         meta: {
           icon: 'dashboard',
           title: 'dashboard',
+          affix: true,
         },
       },
     ],

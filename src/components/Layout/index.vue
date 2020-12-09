@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-09 14:59:38
+ * @LastEditTime: 2020-12-09 21:27:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
@@ -23,31 +23,39 @@
 
     <a-layout>
       <a-layout-header style=" padding: 0;background: #fff;">
-        <menu-unfold-outlined v-if="collapsed" class="trigger" @click="trigger(!collapsed)" />
-        <menu-fold-outlined v-else class="trigger" @click="trigger(!collapsed)" />
+        <div>
+          <menu-unfold-outlined v-if="collapsed" @click="trigger(!collapsed)" />
+          <menu-fold-outlined v-else @click="trigger(!collapsed)" />
+        </div>
+        <tags-view />
       </a-layout-header>
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         <router-view v-slot="{ Component, route }">
-          <component :is="Component" :key="route.fullPath" />
+          <keep-alive>
+            <component :is="Component" :key="route.fullPath" />
+          </keep-alive>
         </router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
-  import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
-  import SiderBarMenu from './components/SiderBarMenu/index'
-  // import { useProject } from '@/store/modules/project'
-  import { userPermission } from '@/store/modules/permission'
   import { ref } from 'vue'
+  import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+
+  import SiderBarMenu from './components/SiderBarMenu/index'
+  import TagsView from './components/TagsView/index.vue'
+
+  import { userPermission } from '@/store/modules/permission'
   export default {
     name: 'DefaultLayout',
     components: {
       MenuUnfoldOutlined,
       MenuFoldOutlined,
       SiderBarMenu,
+      TagsView,
     },
     data() {
       return {
@@ -83,26 +91,12 @@
     },
   }
 </script>
-<style>
+<style lang="less" scoped>
   #components-layout-demo-custom-trigger {
     height: 100vh;
   }
 
-  #components-layout-demo-custom-trigger .trigger {
-    padding: 0 24px;
-    font-size: 18px;
-    line-height: 64px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
-  #components-layout-demo-custom-trigger .trigger:hover {
-    color: #1890ff;
-  }
-
-  #components-layout-demo-custom-trigger .logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.2);
+  .ant-layout-header {
+    line-height: 1;
   }
 </style>
