@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-08 23:41:02
+ * @LastEditTime: 2020-12-09 14:59:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
@@ -15,6 +15,7 @@
         mode="inline"
         v-model:selectedKeys="selectedKeys"
         v-model:openKeys="openKeys"
+        :inline-collapsed="collapsed"
       >
         <sider-bar-menu v-for="route in routes" :key="route.path" :item="route" />
       </a-menu>
@@ -22,12 +23,8 @@
 
     <a-layout>
       <a-layout-header style=" padding: 0;background: #fff;">
-        <menu-unfold-outlined
-          v-if="collapsed"
-          class="trigger"
-          @click="() => (collapsed = !collapsed)"
-        />
-        <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+        <menu-unfold-outlined v-if="collapsed" class="trigger" @click="trigger(!collapsed)" />
+        <menu-fold-outlined v-else class="trigger" @click="trigger(!collapsed)" />
       </a-layout-header>
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
@@ -42,7 +39,9 @@
 <script>
   import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
   import SiderBarMenu from './components/SiderBarMenu/index'
+  // import { useProject } from '@/store/modules/project'
   import { userPermission } from '@/store/modules/permission'
+  import { ref } from 'vue'
   export default {
     name: 'DefaultLayout',
     components: {
@@ -54,7 +53,7 @@
       return {
         selectedKeys: [],
         openKeys: [],
-        collapsed: false,
+        // collapsed: false,
       }
     },
     watch: {
@@ -70,8 +69,16 @@
     },
     setup() {
       const routes = userPermission.getRoutesState
+      // const collapsed = useProject.getCollapsedState
+      const collapsed = ref(false)
+      function trigger(flag) {
+        console.log(flag)
+        collapsed.value = flag
+      }
       return {
         routes,
+        trigger,
+        collapsed,
       }
     },
   }
