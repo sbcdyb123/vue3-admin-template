@@ -1,9 +1,9 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:53:01
- * @LastEditTime: 2020-12-10 01:47:32
+ * @LastEditTime: 2020-12-10 16:26:23
  */
-import { computed, onMounted, watch } from 'vue'
+import { computed, onMounted, unref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import path from 'path'
 
@@ -11,9 +11,10 @@ import { userPermission } from '@/store/modules/permission'
 
 import { AppRouteRecordRaw, RouteMeta } from '@/router/type'
 import { useTagsViewStore } from '@/store/modules/tagesView'
+import { useGo } from '@/hooks/web/usePage'
 
 export interface Tag {
-  fullpath: string
+  fullPath: string
   path: string
   name: string
   meta: RouteMeta
@@ -40,7 +41,7 @@ export function useTagsView() {
       if (route.meta && route.meta.affix) {
         const tagPath: string = path.resolve(basePath)
         tags.push({
-          fullpath: tagPath,
+          fullPath: tagPath,
           path: tagPath,
           name: route.name,
           meta: { ...route.meta },
@@ -63,6 +64,8 @@ export function useTagsView() {
    */
   function initTags() {
     const affixTags = filterAffixTags(routes)
+    console.log(affixTags)
+
     for (const tag of affixTags) {
       //必须要有name
       if (tag.name) {
@@ -76,11 +79,15 @@ export function useTagsView() {
    * @return {*}
    */
   function addTags() {
-    const { name } = route
+    const { name, fullPath, path, meta } = route
     if (name) {
-      console.log(name)
-
-      useTagsViewStore.actionAddTags(route as any)
+      const tag: Tag = {
+        name: unref(name) as string,
+        fullPath: unref(fullPath),
+        path: unref(path),
+        meta: unref(meta) as RouteMeta,
+      }
+      useTagsViewStore.actionAddTags(tag)
     }
   }
   /**
@@ -91,19 +98,31 @@ export function useTagsView() {
   function isAffix(tag: Tag) {
     return tag.meta && tag.meta.affix
   }
-  const visitedTags = computed(() => useTagsViewStore.getVisibleTagsState)
-  watch(route, () => {
-    console.log(route)
+  function handleTagChange(activeKey: string) {
+    console.log(activeKey)
 
-    addTags()
-    console.log(visitedTags)
-  })
+    const go = useGo()
+    go(activeKey)
+  }
+
+  const visitedTags = computed(() => useTagsViewStore.getVisibleTagsState)
+  const cachedTages = computed(() => useTagsViewStore.getCachedTagesState)
+  const routeFullPath = computed(() => route.fullPath)
+  watch(
+    routeFullPath,
+    () => {
+      addTags()
+    },
+    { deep: false }
+  )
   onMounted(() => {
     initTags()
     addTags()
   })
   return {
     visitedTags,
+    cachedTages,
     isAffix,
+    handleTagChange,
   }
 }

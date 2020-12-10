@@ -1,12 +1,12 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:49:58
- * @LastEditTime: 2020-12-10 01:44:55
+ * @LastEditTime: 2020-12-10 16:02:53
  */
 import store from '@/store/index'
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators'
 import { hotModuleUnregisterModule } from '@/utils/helper/vuexHelper'
-import { Tag } from '@/components/Layout/hooks'
+import { Tag } from '@/components/Layout/hooks/useTagsView'
 import { assign } from 'lodash-es'
 const NAME = 'TagsView'
 hotModuleUnregisterModule(NAME)
@@ -30,9 +30,8 @@ class TagsView extends VuexModule {
    */
   @Mutation
   addVisitedTag(tag: Tag): void {
-    if (this.visitedTags.some((tag) => tag.path === tag.path)) return
+    if (this.visitedTags.some((t) => t.name === tag.name)) return
     this.visitedTags.push(assign({}, tag, { title: tag.meta.title || 'no-name' }))
-    console.log(this.visitedTags)
   }
   @Mutation
   addCachedTag(tag: Tag): void {
@@ -42,7 +41,7 @@ class TagsView extends VuexModule {
   @Mutation
   delVisitedTag(tag: Tag) {
     for (const [i, v] of this.visitedTags.entries()) {
-      if (v.path === tag.path) {
+      if (v.name === tag.name) {
         this.visitedTags.splice(i, 1)
         break
       }
@@ -56,7 +55,7 @@ class TagsView extends VuexModule {
   @Mutation
   delOthersVisitedTags(tag: Tag) {
     this.visitedTags = this.visitedTags.filter((t) => {
-      return t.meta.affix || t.path === tag.path
+      return t.meta.affix || t.name === tag.name
     })
   }
   @Mutation
@@ -81,7 +80,7 @@ class TagsView extends VuexModule {
   @Mutation
   updateVisitedTags(tag: Tag) {
     for (let v of this.visitedTags) {
-      if (v.path === v.path) {
+      if (tag.name === v.name) {
         v = assign(v, tag)
         break
       }

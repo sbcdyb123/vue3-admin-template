@@ -2,7 +2,7 @@
  * @Author: fangLong
  * @Date: 2020-12-03 18:37:34
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-07 06:54:07
+ * @LastEditTime: 2020-12-10 16:19:26
  * @FilePath: \vue3-admin-template\src\router\index.ts
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -34,7 +34,7 @@ import { createGuard } from './guard'
 //   path: 'addRoute',
 //   component: () => import('@/views/test/addRoute.vue'),
 // }
-const router = createRouter({
+export const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes: baseRoutes,
   scrollBehavior: scrollBehavior,
