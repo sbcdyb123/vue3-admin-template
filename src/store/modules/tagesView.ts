@@ -1,7 +1,7 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:49:58
- * @LastEditTime: 2020-12-10 16:02:53
+ * @LastEditTime: 2020-12-11 11:14:55
  */
 import store from '@/store/index'
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators'
@@ -100,9 +100,10 @@ class TagsView extends VuexModule {
     this.addCachedTag(tag)
   }
   @Action
-  async actionDeltag(tag: Tag) {
-    await this.actionDelVTag(tag)
-    await this.actionDelCTag(tag)
+  async actionDeltag(fullPath: string) {
+    const tag = this.visitedTags.find((t) => t.fullPath === fullPath)
+    tag && (await this.actionDelVTag(tag))
+    tag && (await this.actionDelCTag(tag))
     return {
       visitedTags: [...this.visitedTags],
       cachedTages: [...this.cachedTages],
@@ -161,8 +162,14 @@ class TagsView extends VuexModule {
     return [...this.cachedTages]
   }
   @Action
-  actionUpdateTags(tag: Tag) {
-    this.updateVisitedTags(tag)
+  actionUpdateTags({ name, fullPath }: { name: string; fullPath: string }) {
+    const tag = assign(
+      {},
+      this.visitedTags.find((t) => t.name === name)
+    )
+    if (tag) {
+      this.updateVisitedTags(assign(tag, { fullPath }) as Tag)
+    }
   }
 }
 export const useTagsViewStore = getModule<TagsView>(TagsView)

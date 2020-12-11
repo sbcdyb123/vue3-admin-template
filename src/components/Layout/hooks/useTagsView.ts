@@ -1,9 +1,9 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:53:01
- * @LastEditTime: 2020-12-10 16:26:23
+ * @LastEditTime: 2020-12-11 11:16:36
  */
-import { computed, onMounted, unref, watch } from 'vue'
+import { computed, onMounted, ref, unref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import path from 'path'
 
@@ -64,8 +64,6 @@ export function useTagsView() {
    */
   function initTags() {
     const affixTags = filterAffixTags(routes)
-    console.log(affixTags)
-
     for (const tag of affixTags) {
       //必须要有name
       if (tag.name) {
@@ -99,21 +97,27 @@ export function useTagsView() {
     return tag.meta && tag.meta.affix
   }
   function handleTagChange(activeKey: string) {
-    console.log(activeKey)
-
     const go = useGo()
     go(activeKey)
   }
-
+  function handleEdit(targetKey: string): void {
+    useTagsViewStore.actionDeltag(targetKey)
+  }
+  const activeKeyRef = ref('')
   const visitedTags = computed(() => useTagsViewStore.getVisibleTagsState)
   const cachedTages = computed(() => useTagsViewStore.getCachedTagesState)
   const routeFullPath = computed(() => route.fullPath)
+
   watch(
     routeFullPath,
     () => {
       addTags()
+      const { fullPath, name } = route
+      name &&
+        useTagsViewStore.actionUpdateTags({ name, fullPath } as { name: string; fullPath: string })
+      activeKeyRef.value = fullPath
     },
-    { deep: false }
+    { deep: false, immediate: true }
   )
   onMounted(() => {
     initTags()
@@ -124,5 +128,7 @@ export function useTagsView() {
     cachedTages,
     isAffix,
     handleTagChange,
+    activeKeyRef,
+    handleEdit,
   }
 }
