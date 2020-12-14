@@ -1,7 +1,7 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:49:58
- * @LastEditTime: 2020-12-11 11:14:55
+ * @LastEditTime: 2020-12-14 14:05:03
  */
 import store from '@/store/index'
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators'
@@ -86,6 +86,34 @@ class TagsView extends VuexModule {
       }
     }
   }
+  @Mutation
+  delLeftVTags(tag: Tag) {
+    const tagIndex = this.visitedTags.findIndex((t) => t.fullPath === tag.fullPath)
+    if (tagIndex !== -1) {
+      this.visitedTags = this.visitedTags.filter((t, index) => t.meta.affix || index >= tagIndex)
+    }
+  }
+  @Mutation
+  delLeftCTags(tag: Tag) {
+    const tagIndex = this.cachedTages.findIndex((t) => t === tag.name)
+    if (tagIndex !== -1) {
+      this.cachedTages = this.cachedTages.filter((t, index) => index >= tagIndex)
+    }
+  }
+  @Mutation
+  delRightVTags(tag: Tag) {
+    const tagIndex = this.visitedTags.findIndex((t) => t.fullPath === tag.fullPath)
+    if (tagIndex !== -1) {
+      this.visitedTags = this.visitedTags.filter((t, index) => t.meta.affix || index <= tagIndex)
+    }
+  }
+  @Mutation
+  delRightCTags(tag: Tag) {
+    const tagIndex = this.cachedTages.findIndex((t) => t === tag.name)
+    if (tagIndex !== -1) {
+      this.cachedTages = this.cachedTages.filter((t, index) => index <= tagIndex)
+    }
+  }
   @Action
   actionAddTags(tag: Tag) {
     this.actionAddCTag(tag)
@@ -162,7 +190,7 @@ class TagsView extends VuexModule {
     return [...this.cachedTages]
   }
   @Action
-  actionUpdateTags({ name, fullPath }: { name: string; fullPath: string }) {
+  async actionUpdateTags({ name, fullPath }: { name: string; fullPath: string }) {
     const tag = assign(
       {},
       this.visitedTags.find((t) => t.name === name)
@@ -170,6 +198,22 @@ class TagsView extends VuexModule {
     if (tag) {
       this.updateVisitedTags(assign(tag, { fullPath }) as Tag)
     }
+  }
+  @Action
+  actionDelLeftCTags(tag: Tag) {
+    return new Promise((resolve) => {
+      this.delLeftVTags(tag)
+      this.delLeftCTags(tag)
+      resolve([...this.visitedTags])
+    })
+  }
+  @Action
+  actionDelRightCTags(tag: Tag) {
+    return new Promise((resolve) => {
+      this.delRightVTags(tag)
+      this.delRightCTags(tag)
+      resolve([...this.cachedTages])
+    })
   }
 }
 export const useTagsViewStore = getModule<TagsView>(TagsView)

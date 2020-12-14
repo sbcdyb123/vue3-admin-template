@@ -1,21 +1,20 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-09 21:27:50
+ * @LastEditTime: 2020-12-14 16:00:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
 -->
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <a-layout-sider>
+    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <a-menu
         class="vab-menu"
         theme="dark"
         mode="inline"
         v-model:selectedKeys="selectedKeys"
         v-model:openKeys="openKeys"
-        :inline-collapsed="collapsed"
       >
         <sider-bar-menu v-for="route in routes" :key="route.path" :item="route" />
       </a-menu>
@@ -23,17 +22,14 @@
 
     <a-layout>
       <a-layout-header style=" padding: 0;background: #fff;">
-        <div>
-          <menu-unfold-outlined v-if="collapsed" @click="trigger(!collapsed)" />
-          <menu-fold-outlined v-else @click="trigger(!collapsed)" />
-        </div>
+        <Header />
         <tags-view />
       </a-layout-header>
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         <router-view v-slot="{ Component, route }">
-          <keep-alive>
+          <keep-alive :include="cachedTages">
             <component :is="Component" :key="route.fullPath" />
           </keep-alive>
         </router-view>
@@ -42,26 +38,26 @@
   </a-layout>
 </template>
 <script>
-  import { ref } from 'vue'
-  import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+  import { computed } from 'vue'
 
   import SiderBarMenu from './components/SiderBarMenu/index'
   import TagsView from './components/TagsView/index.vue'
+  import Header from './components/Header/index.vue'
 
   import { userPermission } from '@/store/modules/permission'
+  import { useTagsViewStore } from '@/store/modules/tagesView'
   export default {
     name: 'DefaultLayout',
     components: {
-      MenuUnfoldOutlined,
-      MenuFoldOutlined,
       SiderBarMenu,
       TagsView,
+      Header,
     },
     data() {
       return {
         selectedKeys: [],
         openKeys: [],
-        // collapsed: false,
+        collapsed: false,
       }
     },
     watch: {
@@ -77,16 +73,11 @@
     },
     setup() {
       const routes = userPermission.getRoutesState
-      // const collapsed = useProject.getCollapsedState
-      const collapsed = ref(false)
-      function trigger(flag) {
-        console.log(flag)
-        collapsed.value = flag
-      }
+      const cachedTages = computed(() => useTagsViewStore.getCachedTagesState)
+
       return {
         routes,
-        trigger,
-        collapsed,
+        cachedTages,
       }
     },
   }
@@ -97,6 +88,7 @@
   }
 
   .ant-layout-header {
+    height: 80px;
     line-height: 1;
   }
 </style>

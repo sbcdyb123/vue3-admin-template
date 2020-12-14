@@ -1,6 +1,6 @@
 <!--
  * @Date: 2020-12-11 13:58:05
- * @LastEditTime: 2020-12-11 15:18:01
+ * @LastEditTime: 2020-12-14 15:07:58
  * @Description:
 -->
 <template>
@@ -8,7 +8,11 @@
     <span>{{ title }}</span>
     <template #overlay>
       <a-menu @click="handleMenuClick">
-        <a-menu-item v-for="item in menuList" :key="item.eventName">
+        <a-menu-item
+          v-for="item in menuList"
+          :key="item.eventName"
+          :disabled="isDisabled(item.text)"
+        >
           <svg-icon :icon-class="item.icon" class-name="space"></svg-icon>
           <span>{{ item.text }}</span>
         </a-menu-item>
@@ -18,11 +22,14 @@
 </template>
 
 <script lang="ts">
+  import { useTagsViewStore } from '@/store/modules/tagesView'
   import { Dropdown } from 'ant-design-vue'
 
-  import { defineComponent } from 'vue'
+  import { computed, defineComponent, PropType, unref } from 'vue'
+  import { MenuText } from '../../hooks/type'
 
   import { useDorpDown } from '../../hooks/useDropDown'
+  import { Tag } from '../../hooks/useTagsView'
   export default defineComponent({
     name: 'DropDown',
     props: {
@@ -31,7 +38,7 @@
         required: true,
       },
       tag: {
-        type: Object,
+        type: Object as PropType<Tag>,
         required: true,
       },
     },
@@ -48,9 +55,25 @@
           emit('menu-event', { eventName: menuEvent.eventName, tag: props.tag })
         }
       }
+      function isDisabled(menuName: string) {
+        const { tag } = props
+        // console.log(menuName, index)
+        const tags = computed(() => useTagsViewStore.getVisibleTagsState)
+        const tagIndex = unref(tags).findIndex((t) => t.fullPath === tag.fullPath)
+        if (menuName === MenuText.CLOSE_CURRENT) {
+          return !!tag.meta.affix
+        }
+        if (menuName === MenuText.CLOSE_LEFT) {
+          return tagIndex === 0 ? true : false
+        }
+        if (menuName === MenuText.CLOSE_RIGHT) {
+          return tagIndex === unref(tags).length - 1 ? true : false
+        }
+      }
       return {
         handleMenuClick,
         menuList,
+        isDisabled,
       }
     },
   })

@@ -1,15 +1,24 @@
+import { useGo } from '@/hooks/web/usePage'
 import { useTagsViewStore } from '@/store/modules/tagesView'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { MenuEvent, MenuIcon, MenuInfo, MenuText } from './type'
 import { Tag } from './useTagsView'
 
 /*
  * @Date: 2020-12-11 14:08:40
- * @LastEditTime: 2020-12-11 15:35:07
+ * @LastEditTime: 2020-12-14 14:33:55
  * @Description:
  */
 
 export function useDorpDown() {
+  function toLastView(visitedTags: Tag[]) {
+    const latestView = visitedTags.slice(-1)[0]
+    const go = useGo()
+
+    if (latestView) {
+      go(latestView.fullPath)
+    }
+  }
   const menuList = reactive<MenuInfo[]>([
     {
       text: MenuText.CLOSE_CURRENT,
@@ -37,28 +46,34 @@ export function useDorpDown() {
       eventName: MenuEvent.CLOSE_ALL,
     },
   ])
-  function handleMenuEvent({ eventName, tag }: { eventName: MenuEvent; tag: Tag }) {
+  async function handleMenuEvent({ eventName, tag }: { eventName: MenuEvent; tag: Tag }) {
+    const visitedTags = computed(() => useTagsViewStore.getVisibleTagsState)
     switch (eventName) {
       case MenuEvent.CLOSE_CURRENT:
-        useTagsViewStore.actionDeltag(tag.fullPath)
-        console.log('点击了CLOSE_CURRENT', tag)
+        await useTagsViewStore.actionDeltag(tag.fullPath)
+        toLastView(visitedTags.value)
         break
       case MenuEvent.CLOSE_LEFT:
-        console.log('点击了CLOSE_LEFT')
+        await useTagsViewStore.actionDelLeftCTags(tag)
+        toLastView(visitedTags.value)
         break
       case MenuEvent.CLOSE_RIGHT:
-        console.log('点击了CLOSE_RIGHT')
+        await useTagsViewStore.actionDelRightCTags(tag)
+        toLastView(visitedTags.value)
         break
       case MenuEvent.CLOSE_OTHER:
-        console.log('点击了CLOSE_OTHER')
+        await useTagsViewStore.actionsDelOtherTags(tag)
+        toLastView(visitedTags.value)
         break
       case MenuEvent.CLOSE_ALL:
-        console.log('点击了CLOSE_ALL')
+        await useTagsViewStore.actionDelAllTags()
+        toLastView(visitedTags.value)
         break
     }
   }
   return {
     menuList,
     handleMenuEvent,
+    toLastView,
   }
 }

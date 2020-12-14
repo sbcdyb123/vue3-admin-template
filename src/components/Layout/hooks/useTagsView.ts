@@ -1,7 +1,7 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:53:01
- * @LastEditTime: 2020-12-11 11:16:36
+ * @LastEditTime: 2020-12-14 14:31:50
  */
 import { computed, onMounted, ref, unref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -12,6 +12,7 @@ import { userPermission } from '@/store/modules/permission'
 import { AppRouteRecordRaw, RouteMeta } from '@/router/type'
 import { useTagsViewStore } from '@/store/modules/tagesView'
 import { useGo } from '@/hooks/web/usePage'
+import { useDorpDown } from './useDropDown'
 
 export interface Tag {
   fullPath: string
@@ -67,7 +68,7 @@ export function useTagsView() {
     for (const tag of affixTags) {
       //必须要有name
       if (tag.name) {
-        useTagsViewStore.actionAddVTag(tag)
+        useTagsViewStore.actionAddTags(tag)
       }
     }
   }
@@ -102,12 +103,12 @@ export function useTagsView() {
   }
   function handleEdit(targetKey: string): void {
     useTagsViewStore.actionDeltag(targetKey)
+    useDorpDown().toLastView(useTagsViewStore.getVisibleTagsState)
   }
   const activeKeyRef = ref('')
   const visitedTags = computed(() => useTagsViewStore.getVisibleTagsState)
   const cachedTages = computed(() => useTagsViewStore.getCachedTagesState)
   const routeFullPath = computed(() => route.fullPath)
-
   watch(
     routeFullPath,
     () => {
