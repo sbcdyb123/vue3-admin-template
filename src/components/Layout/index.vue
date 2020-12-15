@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-14 16:00:21
+ * @LastEditTime: 2020-12-15 10:51:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
 -->
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+    <a-layout-sider :collapsed="collapsed" :trigger="null" collapsible>
       <a-menu
         class="vab-menu"
         theme="dark"
@@ -46,6 +46,7 @@
 
   import { userPermission } from '@/store/modules/permission'
   import { useTagsViewStore } from '@/store/modules/tagesView'
+  import { useProject } from '@/store/modules/project'
   export default {
     name: 'DefaultLayout',
     components: {
@@ -57,7 +58,6 @@
       return {
         selectedKeys: [],
         openKeys: [],
-        collapsed: false,
       }
     },
     watch: {
@@ -74,10 +74,11 @@
     setup() {
       const routes = userPermission.getRoutesState
       const cachedTages = computed(() => useTagsViewStore.getCachedTagesState)
-
+      const collapsed = computed(() => useProject.getCollapsedState)
       return {
         routes,
         cachedTages,
+        collapsed,
       }
     },
   }

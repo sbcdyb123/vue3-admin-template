@@ -2,27 +2,35 @@
  * @Author: fangLong
  * @Date: 2020-12-04 21:35:57
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-08 18:50:09
+ * @LastEditTime: 2020-12-15 13:36:18
  * @FilePath: \vue3-admin-template\src\router\routes\index.ts
  */
 
 // import { RouteRecordRaw } from 'vue-router'
 import sysRoutes from './modules/sys'
-
+import Layout from '@/views/dashboard/index.vue'
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Dashboard',
-  //   component: () => import('@/components/Layout/index.vue'),
-  //   redirect: '/dashboard',
-  //   children: [
-  //     {
-  //       path: 'dashboard',
-  //       name: 'dashboard-index',
-  //       component: () => import('@/views/dashboard/index.vue'),
-  //     },
-  //   ],
-  // },
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/NotFound.vue'),
+    hidden: true,
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401.vue'),
+    hidden: true,
+  },
   {
     path: '/login',
     name: 'login',
@@ -34,5 +42,8 @@ const routes = [
   },
 ]
 
-export const asyncRoutes = [...sysRoutes]
+export const asyncRoutes = [
+  ...sysRoutes, // 404 page must be placed at the end !!!
+  { path: '/:pathMatch(.*)*', redirect: '/404', hidden: true },
+]
 export const baseRoutes = [...routes]
