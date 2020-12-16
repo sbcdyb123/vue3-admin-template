@@ -18,7 +18,7 @@
     "@types/js-cookie": "^2.2.6",
     "@types/lodash-es": "^4.17.3",
     "@types/nprogress": "^0.2.0",
-    "ant-design-vue": "2.0.0-rc.2",
+    "ant-design-vue": "2.0.0-rc.4",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "husky": "^4.3.0",

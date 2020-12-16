@@ -1,8 +1,9 @@
+import { GetRoutesResponseModel } from './model/userModel'
 /*
  * @Author: your name
  * @Date: 2020-12-04 08:34:05
- * @LastEditTime: 2020-12-07 10:30:47
- * @LastEditors: your name
+ * @LastEditTime: 2020-12-16 10:31:23
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\api\sys\user.ts
  */
@@ -12,6 +13,7 @@ enum Api {
   Login = '/vue-element-admin/user/login',
   Logout = '/vue-element-admin/user/logout',
   UserInfo = '/vue-element-admin/user/info',
+  getRoutes = '/vue-element-admin/routes',
 }
 /**
  * @description: 登录接口
@@ -48,5 +50,12 @@ export function logout() {
   return request({
     url: Api.Logout,
     method: 'post',
+  })
+}
+
+export function getRoutes() {
+  return request<GetRoutesResponseModel>({
+    url: Api.getRoutes,
+    method: 'get',
   })
 }

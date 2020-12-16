@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-15 10:51:22
+ * @LastEditTime: 2020-12-16 12:47:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
@@ -29,9 +29,11 @@
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         <router-view v-slot="{ Component, route }">
-          <keep-alive :include="cachedTages">
-            <component :is="Component" :key="route.fullPath" />
-          </keep-alive>
+          <transition name="fade-transform" mode="out-in">
+            <keep-alive :include="cachedTages">
+              <component :is="Component" :key="route.fullPath" />
+            </keep-alive>
+          </transition>
         </router-view>
       </a-layout-content>
     </a-layout>
@@ -84,6 +86,22 @@
   }
 </script>
 <style lang="less" scoped>
+  /* fade-transform */
+  .fade-transform-leave-active,
+  .fade-transform-enter-active {
+    transition: all 0.5s;
+  }
+
+  .fade-transform-enter {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .fade-transform-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
   #components-layout-demo-custom-trigger {
     height: 100vh;
   }

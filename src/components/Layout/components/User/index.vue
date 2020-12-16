@@ -1,6 +1,6 @@
 <!--
  * @Date: 2020-12-15 10:02:51
- * @LastEditTime: 2020-12-15 10:44:51
+ * @LastEditTime: 2020-12-16 11:27:21
  * @Description:
 -->
 <template>
@@ -16,7 +16,7 @@
           <span class="text">个人中心</span>
         </a-menu-item>
         <a-menu-divider />
-        <a-menu-item key="3">
+        <a-menu-item key="3" @click="loginOut">
           <LoginOutlined />
           <span class="text">退出系统</span>
         </a-menu-item>
@@ -29,6 +29,9 @@
   import { defineComponent } from 'vue'
   import { Avatar, Dropdown } from 'ant-design-vue'
   import { UserDeleteOutlined, LoginOutlined } from '@ant-design/icons-vue'
+  import { userStore } from '@/store/modules/user'
+  import { useGo } from '@/hooks/web/usePage'
+  import { useRoute } from 'vue-router'
   export default defineComponent({
     name: 'User',
     components: {
@@ -37,9 +40,17 @@
       UserDeleteOutlined,
       LoginOutlined,
     },
-    // setup(){
-
-    // }
+    setup() {
+      const route = useRoute()
+      async function loginOut() {
+        await userStore.Loginout()
+        const go = useGo()
+        go(`/login?redirect=${route.fullPath}`)
+      }
+      return {
+        loginOut,
+      }
+    },
   })
 </script>
 

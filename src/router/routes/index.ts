@@ -2,7 +2,7 @@
  * @Author: fangLong
  * @Date: 2020-12-04 21:35:57
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-15 13:36:18
+ * @LastEditTime: 2020-12-16 12:50:47
  * @FilePath: \vue3-admin-template\src\router\routes\index.ts
  */
 
@@ -33,7 +33,6 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'login',
     hidden: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

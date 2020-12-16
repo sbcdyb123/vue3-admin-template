@@ -1,11 +1,11 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-03 22:57:17
- * @LastEditors: fangLong
- * @LastEditTime: 2020-12-06 04:24:55
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-12-16 10:37:43
  * @FilePath: \vue3-admin-template\mock\data\user.js
  */
-
+const routes = require('./routes')
 const tokens = {
   admin: {
     token: 'admin-token111',
@@ -90,6 +90,18 @@ module.exports = [
         success: true,
         response: null,
         message: 'logout...',
+      }
+    },
+  },
+  // mock get all routes form server
+  {
+    url: '/vue-element-admin/routes',
+    type: 'get',
+    response: (_) => {
+      return {
+        success: true,
+        response: routes,
+        message: 'get routes success.......',
       }
     },
   },

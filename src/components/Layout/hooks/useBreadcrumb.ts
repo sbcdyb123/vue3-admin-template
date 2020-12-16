@@ -1,6 +1,6 @@
 /*
  * @Date: 2020-12-15 09:47:32
- * @LastEditTime: 2020-12-15 09:50:48
+ * @LastEditTime: 2020-12-16 08:58:01
  * @Description:
  */
 import { computed, ref, watch } from 'vue'
@@ -19,7 +19,7 @@ function getBreadcrumb(route: any): any {
   )
   const first = matched[0]
   if (!isDashboard(first)) {
-    matched = [{ path: '/dashboard', meta: { title: 'Dashboard' } }].concat(matched)
+    matched = [{ path: '/dashboard', meta: { title: 'dashboard' } }].concat(matched)
   }
   const levelList = matched.filter(
     (item: { meta: { title: string; breadcrumb: boolean } }) =>
