@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 09:59:37
- * @LastEditTime: 2020-12-16 16:32:15
+ * @LastEditTime: 2020-12-17 09:05:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-admin-template\src\views\sys\login.vue
@@ -20,11 +20,7 @@
               </a-input>
             </a-form-item>
             <a-form-item v-bind="validateUpInfos.password">
-              <a-input-password
-                v-model:value="formRef.password"
-                placeholder="input password"
-                size="large"
-              >
+              <a-input-password v-model:value="formRef.password" placeholder="input password">
                 <template #prefix>
                   <LockOutlined style="color: rgba(0,0,0,.25);" />
                 </template>
@@ -33,18 +29,14 @@
           </a-tab-pane>
           <a-tab-pane key="phone" tab="手机号登录">
             <a-form-item v-bind="validatePhoneInfos.phone">
-              <a-input v-model:value="formPhoneRef.phone" placeholder="Username" size="large">
+              <a-input v-model:value="formPhoneRef.phone" placeholder="Username">
                 <template #prefix>
                   <TabletOutlined style="color: rgba(0,0,0,.25);" />
                 </template>
               </a-input>
             </a-form-item>
             <a-form-item>
-              <a-input-search
-                v-model:value="formPhoneRef.code"
-                placeholder="input search text"
-                size="large"
-              >
+              <a-input-search v-model:value="formPhoneRef.code" placeholder="input search text">
                 <template #prefix>
                   <MailOutlined style="color: rgba(0,0,0,.25);" />
                 </template>
@@ -74,7 +66,7 @@
           </a-col>
         </a-row>
         <a-form-item>
-          <a-button type="primary" html-type="submit" @click="submit">
+          <a-button type="primary" html-type="submit" @click="submit" :loading="loading">
             登录
           </a-button>
         </a-form-item>
@@ -104,6 +96,7 @@
         formPhoneRef,
         handlePhoneSubmit,
         validatePhoneInfos,
+        loading,
       } = useLogin() // userLoginForm
       const submit = (e: any) =>
         tabKey.value === 'username' ? handleUpSubmit(e) : handlePhoneSubmit(e)
@@ -114,6 +107,7 @@
         formPhoneRef,
         validatePhoneInfos,
         submit,
+        loading,
       }
     },
   })

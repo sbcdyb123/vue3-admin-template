@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 11:20:28
- * @LastEditTime: 2020-12-16 16:14:56
+ * @LastEditTime: 2020-12-17 09:28:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue3-admin-template\src\hooks\web\useLogin.ts
@@ -13,13 +13,15 @@ import { LoginParams } from '@/api/sys/model/userModel'
 import { userStore } from '@/store/modules/user'
 import { omit } from 'lodash-es'
 import { useForm } from '@ant-design-vue/use'
+import { useMessage } from './useMessage'
 export function useLogin() {
   const tabKey = ref('username') //tabs
   const router = useRouter()
   const route = useRoute()
   const redirect = computed(() => route.query.redirect)
   const otherQuery = computed(() => omit(route.query, 'redirect'))
-
+  const loading = ref(false)
+  const { createNotification } = useMessage()
   //账号密码登录验证
   const formRef = reactive<LoginParams>({
     username: 'admin',
@@ -47,14 +49,22 @@ export function useLogin() {
     validateInfos: validateUpInfos,
   } = useForm(formRef, usernameRulesRef)
   const handleUpSubmit = (e: any) => {
+    loading.value = true
     e.preventDefault()
     validateUp()
       .then(async () => {
         const { response } = await login(formRef)
         userStore.commitTokenState(response.token)
         router.push({ path: unref(redirect) as string, query: unref(otherQuery) })
+        loading.value = false
+        createNotification.success({
+          message: '登录成功',
+          description: `欢迎回来：username`,
+          duration: 3,
+        })
       })
       .catch((err) => {
+        loading.value = false
         console.log('error', err)
       })
   }
@@ -85,15 +95,18 @@ export function useLogin() {
     validateInfos: validatePhoneInfos,
   } = useForm(formPhoneRef, phoneRulesRef)
   const handlePhoneSubmit = (e: any) => {
+    loading.value = true
     e.preventDefault()
     validatePhone()
       .then(async () => {
         const { response } = await login(formRef)
         userStore.commitTokenState(response.token)
         router.push({ path: unref(redirect) as string, query: unref(otherQuery) })
+        loading.value = false
       })
       .catch((err) => {
         console.log('error', err)
+        loading.value = false
       })
   }
   return {
@@ -106,5 +119,6 @@ export function useLogin() {
     handlePhoneSubmit,
     resetPhoneFields,
     validatePhoneInfos,
+    loading,
   }
 }
