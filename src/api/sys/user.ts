@@ -2,7 +2,7 @@ import { GetRoutesResponseModel } from './model/userModel'
 /*
  * @Author: your name
  * @Date: 2020-12-04 08:34:05
- * @LastEditTime: 2020-12-16 10:31:23
+ * @LastEditTime: 2020-12-21 12:43:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\api\sys\user.ts
@@ -20,11 +20,11 @@ enum Api {
  * @param {LoginParams} data
  * @return {*}
  */
-export function login(data: LoginParams) {
+export function login(params: LoginParams) {
   return request<LoginResponseModel>({
     url: Api.Login,
-    method: 'post',
-    data,
+    method: 'get',
+    params,
   })
 }
 
