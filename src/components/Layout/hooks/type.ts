@@ -1,6 +1,6 @@
 /*
  * @Date: 2020-12-11 14:47:16
- * @LastEditTime: 2020-12-11 15:10:23
+ * @LastEditTime: 2020-12-17 14:24:00
  * @Description:
  */
 export interface MenuInfo {
@@ -14,13 +14,15 @@ export enum MenuText {
   CLOSE_RIGHT = '关闭右侧',
   CLOSE_OTHER = '关闭其他',
   CLOSE_CURRENT = '关闭',
+  REFRESH_CURRENT = '刷新',
 }
 export enum MenuIcon {
-  CLOSE_ALL = 'edit',
-  CLOSE_LEFT = 'email',
-  CLOSE_RIGHT = 'icon',
-  CLOSE_OTHER = 'pdf',
-  CLOSE_CURRENT = 'search',
+  CLOSE_ALL = 'integral-fill',
+  CLOSE_LEFT = 'arrow-left',
+  CLOSE_RIGHT = 'arrow-right',
+  CLOSE_OTHER = 'ellipsis',
+  CLOSE_CURRENT = 'ashbin',
+  REFRESH_CURRENT = 'refresh',
 }
 export enum MenuEvent {
   CLOSE_ALL = 'CLOSE_ALL',
@@ -28,4 +30,5 @@ export enum MenuEvent {
   CLOSE_RIGHT = 'CLOSE_RIGHT',
   CLOSE_OTHER = 'CLOSE_OTHER',
   CLOSE_CURRENT = 'CLOSE_CURRENT',
+  REFRESH_CURRENT = 'REFRESH_CURRENT',
 }

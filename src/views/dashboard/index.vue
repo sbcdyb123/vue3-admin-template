@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 14:44:54
- * @LastEditTime: 2020-12-17 10:28:13
+ * @LastEditTime: 2020-12-17 16:27:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\views\dashboard\index.vue
@@ -17,6 +17,9 @@
           and efficiently.
         </p>
       </div>
+      <Icon icon="mdi:cellphone-dock" :size="30" />
+      <Icon icon="mdi:cellphone-dock" :size="30" />
+      <Icon icon="mdi:cellphone-dock" :size="30" />
     </a-skeleton>
   </div>
 </template>
@@ -24,14 +27,17 @@
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
   import { Skeleton } from 'ant-design-vue'
+  import Icon from '@/components/Icon/index'
   export default defineComponent({
     components: {
       ASkeleton: Skeleton,
+      Icon,
     },
     name: 'dashboard',
     setup() {
       const loading = ref(true)
       setTimeout(() => (loading.value = false), 2000)
+
       return {
         loading,
       }

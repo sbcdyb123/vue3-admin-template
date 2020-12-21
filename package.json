@@ -13,6 +13,7 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
+    "@iconify/iconify": "^2.0.0-rc.2",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@types/js-cookie": "^2.2.6",
@@ -32,6 +33,8 @@
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
+    "@iconify/json": "^1.1.272",
+    "@purge-icons/generated": "^0.4.1",
     "@ls-lint/ls-lint": "^1.9.2",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",

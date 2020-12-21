@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-12-03 15:06:03
- * @LastEditTime: 2020-12-16 12:47:58
+ * @LastEditTime: 2020-12-17 12:46:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \unit-admin-compound\src\components\Layout\index.vue
@@ -109,5 +109,9 @@
   .ant-layout-header {
     height: 80px;
     line-height: 1;
+  }
+
+  .ant-layout-sider {
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   }
 </style>

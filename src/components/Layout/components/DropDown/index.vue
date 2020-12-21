@@ -1,6 +1,6 @@
 <!--
  * @Date: 2020-12-11 13:58:05
- * @LastEditTime: 2020-12-14 15:07:58
+ * @LastEditTime: 2020-12-17 14:30:40
  * @Description:
 -->
 <template>
@@ -13,8 +13,10 @@
           :key="item.eventName"
           :disabled="isDisabled(item.text)"
         >
-          <svg-icon :icon-class="item.icon" class-name="space"></svg-icon>
-          <span>{{ item.text }}</span>
+          <div class="menu-item">
+            <svg-icon :icon-class="item.icon" class-name="space"></svg-icon>
+            <span>{{ item.text }}</span>
+          </div>
         </a-menu-item>
       </a-menu>
     </template>
@@ -82,5 +84,11 @@
 <style scoped lang="less">
   .space {
     margin-right: 10px;
+    font-size: 18px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
   }
 </style>

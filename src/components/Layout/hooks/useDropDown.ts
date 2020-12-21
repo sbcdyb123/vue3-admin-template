@@ -6,7 +6,7 @@ import { Tag } from './useTagsView'
 
 /*
  * @Date: 2020-12-11 14:08:40
- * @LastEditTime: 2020-12-14 14:33:55
+ * @LastEditTime: 2020-12-17 14:04:00
  * @Description:
  */
 
@@ -20,6 +20,11 @@ export function useDorpDown() {
     }
   }
   const menuList = reactive<MenuInfo[]>([
+    {
+      text: MenuText.REFRESH_CURRENT,
+      icon: MenuIcon.REFRESH_CURRENT,
+      eventName: MenuEvent.REFRESH_CURRENT,
+    },
     {
       text: MenuText.CLOSE_CURRENT,
       icon: MenuIcon.CLOSE_CURRENT,
@@ -69,6 +74,8 @@ export function useDorpDown() {
         await useTagsViewStore.actionDelAllTags()
         toLastView(visitedTags.value)
         break
+      case MenuEvent.REFRESH_CURRENT:
+        await useTagsViewStore.actionRefreshCurrent(tag)
     }
   }
   return {

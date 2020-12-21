@@ -2,13 +2,13 @@
  * @Author: fangLong
  * @Date: 2020-12-04 21:35:57
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-12-16 12:50:47
+ * @LastEditTime: 2020-12-17 13:27:39
  * @FilePath: \vue3-admin-template\src\router\routes\index.ts
  */
 
 // import { RouteRecordRaw } from 'vue-router'
+import Layout from '@/components/Layout/index.vue'
 import sysRoutes from './modules/sys'
-import Layout from '@/views/dashboard/index.vue'
 const routes = [
   {
     path: '/redirect',

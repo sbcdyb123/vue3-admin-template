@@ -1,13 +1,15 @@
 /*
  * @Author: fangLong
  * @Date: 2020-12-09 19:49:58
- * @LastEditTime: 2020-12-14 14:05:03
+ * @LastEditTime: 2020-12-17 14:03:39
  */
 import store from '@/store/index'
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators'
 import { hotModuleUnregisterModule } from '@/utils/helper/vuexHelper'
 import { Tag } from '@/components/Layout/hooks/useTagsView'
 import { assign } from 'lodash-es'
+import { router } from '@/router'
+import { nextTick } from 'vue'
 const NAME = 'TagsView'
 hotModuleUnregisterModule(NAME)
 
@@ -212,6 +214,16 @@ class TagsView extends VuexModule {
     return new Promise((resolve) => {
       this.delRightVTags(tag)
       this.delRightCTags(tag)
+      resolve([...this.cachedTages])
+    })
+  }
+  @Action
+  actionRefreshCurrent(tag: Tag) {
+    return new Promise((resolve) => {
+      this.delRightCTags(tag)
+      nextTick(() => {
+        router.replace({ path: '/redirect' + tag.fullPath })
+      })
       resolve([...this.cachedTages])
     })
   }
