@@ -1,5 +1,13 @@
+/*
+ * @Date: 2020-12-04 08:34:05
+ * @LastEditTime: 2020-12-21 15:01:50
+ * @Description:
+ */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { BaseResponseModel } from '@/api/model/baseModel'
+import { useMessage } from '@/hooks/web/useMessage'
+import { checkStatus } from './checkStatus'
+const { createMessage } = useMessage()
 // create an axios instance
 const service: AxiosInstance = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -37,8 +45,20 @@ service.interceptors.response.use(
     return res
   },
   (error: AxiosError) => {
-    console.log('err' + error) // for debug
-
+    const { response, code, message } = error || {}
+    const msg: string = response?.data?.msg ? response.data.msg : ''
+    const err: string = error?.toString()
+    try {
+      if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
+        createMessage.error('接口请求超时,请刷新页面重试')
+      }
+      if (err?.includes('Network Error')) {
+        createMessage.error('网请检查您的网络连接是否正常!')
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+    response && checkStatus(response?.status, msg)
     return Promise.reject(error)
   }
 )
